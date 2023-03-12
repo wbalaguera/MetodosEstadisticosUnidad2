@@ -38,8 +38,8 @@ subset_masculino=subset(CarreraLuz22,CarreraLuz22$sex=="Hombre")
 subset_femenino=subset(CarreraLuz22,CarreraLuz22$sex=="Mujer")
 ```
 
-
 #  <b style= 'color:#aa0000' > Aspectos Generales</b>
+
 
 Column {data-width=50 }
 --------------------------------------------
