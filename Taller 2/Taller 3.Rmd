@@ -1,0 +1,872 @@
+---
+title: "Actividad 2 Metodos"
+subtile: "Actividad 2- WIlson Balguera Cubillos"
+output: 
+  flexdashboard::flex_dashboard:
+    theme:
+      version: 4
+      bg: "#ffffff"
+      fg: "#00557f" 
+      primary: "#f5f5f5"
+      navbar-bg: "#3ADAC6"
+      base_font: 
+        google: Prompt
+      heading_font:
+        google: Sen
+      code_font:
+        google: 
+          # arguments to sass::font_google() 
+          family: JetBrains Mono
+          local: false
+    orientation: columns
+    vertical_layout: fill
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+library(ggplot2)
+# Install thematic and un-comment for themed static plots (i.e., ggplot2)
+# thematic::thematic_rmd()
+```
+
+```{r}
+#definicion
+poblacion_input=rep(c(0,1),each=500 )
+med_pob=mean(poblacion_input)
+var_pob=var(poblacion_input)
+N=length(poblacion_input)
+#definicion muestra
+n_input=500
+n_input5=5
+n_input10=10
+n_input15=15
+n_input20=20
+n_input30=30
+n_input50=50
+n_input60=60
+n_input100=100
+n_input200=200
+#definicion ancho vectir
+ancho_input=500
+
+#funcion estimado
+func_proporcion = function(n,poblacion) {
+  muestra=sample(poblacion,n)
+  estimador=sum(muestra)/n
+  return (estimador)
+}
+#llenado de vector
+#vector500
+dat_500=c()
+dat_5=c()
+dat_10=c()
+dat_15=c()
+dat_20=c()
+dat_30=c()
+dat_50=c()
+dat_60=c()
+dat_100=c()
+dat_200=c()
+for (i in 1:ancho_input) {
+  dat_500[i]=func_proporcion(n=n_input,poblacion=poblacion_input)
+  dat_5[i]=func_proporcion(n=n_input5,poblacion=poblacion_input)
+  dat_10[i]=func_proporcion(n=n_input10,poblacion=poblacion_input)
+  dat_15[i]=func_proporcion(n=n_input15,poblacion=poblacion_input)
+  dat_20[i]=func_proporcion(n=n_input20,poblacion=poblacion_input)
+  dat_30[i]=func_proporcion(n=n_input30,poblacion=poblacion_input)
+  dat_50[i]=func_proporcion(n=n_input50,poblacion=poblacion_input)
+  dat_60[i]=func_proporcion(n=n_input60,poblacion=poblacion_input)
+  dat_100[i]=func_proporcion(n=n_input100,poblacion=poblacion_input)
+  dat_200[i]=func_proporcion(n=n_input200,poblacion=poblacion_input)
+}
+med_mu500=mean(dat_500)
+med_mu5=mean(dat_5)
+med_mu10=mean(dat_10)
+med_mu15=mean(dat_15)
+med_mu20=mean(dat_20)
+med_mu30=mean(dat_30)
+med_mu50=mean(dat_50)
+med_mu60=mean(dat_60)
+med_mu100=mean(dat_100)
+med_mu200=mean(dat_200)
+var_mu500=var(dat_500)
+var_mu5=var(dat_5)
+var_mu10=var(dat_10)
+var_mu15=var(dat_15)
+var_mu20=var(dat_20)
+var_mu30=var(dat_30)
+var_mu50=var(dat_50)
+var_mu60=var(dat_60)
+var_mu100=var(dat_100)
+var_mu200=var(dat_200)
+sha_mu500=shapiro.test(dat_500)
+sha_mu5=shapiro.test(dat_5)
+sha_mu10=shapiro.test(dat_10)
+sha_mu15=shapiro.test(dat_15)
+sha_mu20=shapiro.test(dat_20)
+sha_mu30=shapiro.test(dat_30)
+sha_mu50=shapiro.test(dat_50)
+sha_mu60=shapiro.test(dat_60)
+sha_mu100=shapiro.test(dat_100)
+sha_mu200=shapiro.test(dat_200)
+
+
+```
+
+#  <b style= 'color:#aa0000' >Plantas Enfermas  50%</b>
+
+Column {data-width=40 }
+--------------------------------------------
+
+### Poblacion {.value-box}
+
+```{r}
+valueBox(  N,caption='Poblacion', icon="fa-solid fa-medal",col="#c82a54")
+```
+
+
+### Media Poblacional  {.value-box}
+```{r}
+valueBox(  med_pob,caption='Media Poblacion', icon="fa-solid fa-medal",col="#c82a54")
+```
+
+
+
+Column {data-width=150}  {.tabset}
+-----------------------------------------------------------------------
+### Histograma n=5
+
+**Validez del Sesgo**
+`r paste("mean:",med_mu5)`
+`r paste("Var:",var_mu5)`
+
+**Prueba de Normalidad**
+`r paste(sha_mu5)`
+
+
+```{r}
+qqnorm(dat_5)
+qqline(dat_5)
+hist(dat_5,main= 'Histograma de plantas muertas n=5',
+     ylab='Cantidad',xlap='proporcion',col='#c82a54')
+```
+
+### Histograma n=10
+
+**Validez del Sesgo**
+`r paste("mean:",med_mu10)`
+`r paste("Var:",var_mu10)`
+
+**Prueba de Normalidad**
+`r paste(sha_mu10)`
+
+
+
+```{r}
+qqnorm(dat_10)
+qqline(dat_10)
+hist(dat_10,main= 'Histograma de plantas muertas n=10',
+     ylab='Cantidad',xlap='proporcion',col='#c82a54')
+```
+
+### Histograma n=15
+
+**Validez del Sesgo**
+`r paste("mean:",med_mu15)`
+`r paste("Var:",var_mu15)`
+
+**Prueba de Normalidad**
+`r paste(sha_mu15)`
+
+```{r}
+qqnorm(dat_15)
+qqline(dat_15)
+hist(dat_15,main= 'Histograma de plantas muertas n=15',
+     ylab='Cantidad',xlap='proporcion',col='#c82a54')
+```
+
+
+### Histograma n=20
+
+**Validez del Sesgo**
+`r paste("mean:",med_mu20)`
+`r paste("Var:",var_mu20)`
+
+**Prueba de Normalidad**
+`r paste(sha_mu20)`
+
+
+```{r}
+qqnorm(dat_20)
+qqline(dat_20)
+hist(dat_20,main= 'Histograma de plantas muertas n=20',
+     ylab='Cantidad',xlap='proporcion',col='blue')
+```
+
+### Histograma n=30
+
+**Validez del Sesgo**
+`r paste("mean:",med_mu30)`
+`r paste("Var:",var_mu30)`
+
+**Prueba de Normalidad**
+`r paste(sha_mu30)`
+
+
+
+```{r}
+qqnorm(dat_30)
+qqline(dat_30)
+hist(dat_30,main= 'Histograma de plantas muertas n=30',
+     ylab='Cantidad',xlap='proporcion',col='#c82a54')
+```
+
+
+### Histograma n=50
+
+**Validez del Sesgo**
+`r paste("mean:",med_mu50)`
+`r paste("Var:",var_mu50)`
+
+**Prueba de Normalidad**
+`r paste(sha_mu50)`
+
+```{r}
+qqnorm(dat_50)
+qqline(dat_50)
+hist(dat_50,main= 'Histograma de plantas muertas n=50',
+     ylab='Cantidad',xlap='proporcion',col='#c82a54')
+```
+
+### Histograma n=60
+
+**Validez del Sesgo**
+`r paste("mean:",med_mu60)`
+`r paste("Var:",var_mu60)`
+
+**Prueba de Normalidad**
+`r paste(sha_mu60)`
+
+```{r}
+qqnorm(dat_60)
+qqline(dat_60)
+hist(dat_60,main= 'Histograma de plantas muertas n=60',
+     ylab='Cantidad',xlap='proporcion',col='#c82a54')
+```
+
+### Histograma n=100
+
+**Validez del Sesgo**
+`r paste("mean:",med_mu100)`
+`r paste("Var:",var_mu100)`
+
+**Prueba de Normalidad**
+`r paste(sha_mu100)`
+
+
+```{r}
+qqnorm(dat_100)
+qqline(dat_100)
+hist(dat_100,main= 'Histograma de plantas muertas n=100',
+     ylab='Cantidad',xlap='proporcion',col='#c82a54')
+```
+
+
+### Histograma N=200
+
+**Validez del Sesgo**
+`r paste("mean:",med_mu200)`
+`r paste("Var:",var_mu200)`
+
+**Prueba de Normalidad**
+`r paste(sha_mu200)`
+
+```{r}
+qqnorm(dat_200)
+qqline(dat_200)
+hist(dat_200,main= 'Histograma de plantas muertas n=200',
+     ylab='Cantidad',xlap='proporcion',col='#c82a54')
+```
+
+
+### Histograma n=500
+
+**Validez del Sesgo**
+`r paste("mean:",med_mu500)`
+`r paste("Var:",var_mu500)`
+
+**Prueba de Normalidad**
+`r paste(sha_mu500)`
+
+```{r}
+qqnorm(dat_500)
+qqline(dat_500)
+hist(dat_500,main= 'Histograma de plantas muertas n=500',
+     ylab='Cantidad',xlap='proporcion',col='#c82a54')
+```
+
+
+#  <b style= 'color:#024a86' >Plantas Enfermas  10%</b>
+
+
+```{r}
+#definicion
+poblacion_sana=rep(0,each=900 )
+poblacion_enferma=rep(1,each=100 )
+poblacion_input10= c(poblacion_sana ,poblacion_enferma)
+
+med_pob10=mean(poblacion_input10)
+var_pob10=var(poblacion_input10)
+N10=length(poblacion_input10)
+#definicion muestra
+n_input=500
+n_input5=5
+n_input10=10
+n_input15=15
+n_input20=20
+n_input30=30
+n_input50=50
+n_input60=60
+n_input100=100
+n_input200=200
+#definicion ancho vectir
+ancho_input=500
+
+#funcion estimado
+func_proporcion = function(n,poblacion) {
+  muestra=sample(poblacion,n)
+  estimador=sum(muestra)/n
+  return (estimador)
+}
+#llenado de vector
+#vector500
+dat10_500=c()
+dat10_5=c()
+dat10_10=c()
+dat10_15=c()
+dat10_20=c()
+dat10_30=c()
+dat10_50=c()
+dat10_60=c()
+dat10_100=c()
+dat10_200=c()
+for (i in 1:ancho_input) {
+  dat10_500[i]=func_proporcion(n=n_input,poblacion=poblacion_input10)
+  dat10_5[i]=func_proporcion(n=n_input5,poblacion=poblacion_input10)
+  dat10_10[i]=func_proporcion(n=n_input10,poblacion=poblacion_input10)
+  dat10_15[i]=func_proporcion(n=n_input15,poblacion=poblacion_input10)
+  dat10_20[i]=func_proporcion(n=n_input20,poblacion=poblacion_input10)
+  dat10_30[i]=func_proporcion(n=n_input30,poblacion=poblacion_input10)
+  dat10_50[i]=func_proporcion(n=n_input50,poblacion=poblacion_input10)
+  dat10_60[i]=func_proporcion(n=n_input60,poblacion=poblacion_input10)
+  dat10_100[i]=func_proporcion(n=n_input100,poblacion=poblacion_input10)
+  dat10_200[i]=func_proporcion(n=n_input200,poblacion=poblacion_input10)
+}
+med10_mu500=mean(dat10_500)
+med10_mu5=mean(dat10_5)
+med10_mu10=mean(dat10_10)
+med10_mu15=mean(dat10_15)
+med10_mu20=mean(dat10_20)
+med10_mu30=mean(dat10_30)
+med10_mu50=mean(dat10_50)
+med10_mu60=mean(dat10_60)
+med10_mu100=mean(dat10_100)
+med10_mu200=mean(dat10_200)
+var10_mu500=var(dat10_500)
+var10_mu5=var(dat10_5)
+var10_mu10=var(dat10_10)
+var10_mu15=var(dat10_15)
+var10_mu20=var(dat10_20)
+var10_mu30=var(dat10_30)
+var10_mu50=var(dat10_50)
+var10_mu60=var(dat10_60)
+var10_mu100=var(dat10_100)
+var10_mu200=var(dat10_200)
+sha10_mu500=shapiro.test(dat10_500)
+sha10_mu5=shapiro.test(dat10_5)
+sha10_mu10=shapiro.test(dat10_10)
+sha10_mu15=shapiro.test(dat10_15)
+sha10_mu20=shapiro.test(dat10_20)
+sha10_mu30=shapiro.test(dat10_30)
+sha10_mu50=shapiro.test(dat10_50)
+sha10_mu60=shapiro.test(dat10_60)
+sha10_mu100=shapiro.test(dat10_100)
+sha10_mu200=shapiro.test(dat10_200)
+
+
+```
+
+Column {data-width=40 }
+--------------------------------------------
+
+### Poblacion {.value-box}
+
+```{r}
+valueBox(  N10,caption='Poblacion', icon="fa-solid fa-medal",col="#024A86")
+```
+
+
+### Media Poblacional  {.value-box}
+```{r}
+valueBox(  med_pob10,caption='Media Poblacion', icon="fa-solid fa-medal",col="#024A86")
+```
+
+
+
+Column {data-width=150}  {.tabset}
+-----------------------------------------------------------------------
+### Histograma n=5
+
+**Validez del Sesgo**
+`r paste("mean:",med10_mu5)`
+`r paste("Var:",var10_mu5)`
+
+**Prueba de Normalidad**
+`r paste(sha10_mu5)`
+
+
+```{r}
+qqnorm(dat10_5)
+qqline(dat10_5)
+hist(dat10_5,main= 'Histograma de plantas muertas n=5',
+     ylab='Cantidad',xlap='proporcion',col='#024A86')
+```
+
+### Histograma n=10
+
+**Validez del Sesgo**
+`r paste("mean:",med10_mu10)`
+`r paste("Var:",var10_mu10)`
+
+**Prueba de Normalidad**
+`r paste(sha10_mu10)`
+
+
+
+```{r}
+qqnorm(dat10_10)
+qqline(dat10_10)
+hist(dat10_10,main= 'Histograma de plantas muertas n=10',
+     ylab='Cantidad',xlap='proporcion',col='#024A86')
+```
+
+### Histograma n=15
+
+**Validez del Sesgo**
+`r paste("mean:",med10_mu15)`
+`r paste("Var:",var10_mu15)`
+
+**Prueba de Normalidad**
+`r paste(sha10_mu15)`
+
+```{r}
+qqnorm(dat10_15)
+qqline(dat10_15)
+hist(dat10_15,main= 'Histograma de plantas muertas n=15',
+     ylab='Cantidad',xlap='proporcion',col='#024A86')
+```
+
+
+### Histograma n=20
+
+**Validez del Sesgo**
+`r paste("mean:",med10_mu20)`
+`r paste("Var:",var10_mu20)`
+
+**Prueba de Normalidad**
+`r paste(sha10_mu20)`
+
+
+```{r}
+qqnorm(dat10_20)
+qqline(dat10_20)
+hist(dat10_20,main= 'Histograma de plantas muertas n=20',
+     ylab='Cantidad',xlap='proporcion',col='#024A86')
+```
+
+### Histograma n=30
+
+**Validez del Sesgo**
+`r paste("mean:",med10_mu30)`
+`r paste("Var:",var10_mu30)`
+
+**Prueba de Normalidad**
+`r paste(sha10_mu30)`
+
+
+
+```{r}
+qqnorm(dat10_30)
+qqline(dat10_30)
+hist(dat10_30,main= 'Histograma de plantas muertas n=30',
+     ylab='Cantidad',xlap='proporcion',col='#024A86')
+```
+
+
+### Histograma n=50
+
+**Validez del Sesgo**
+`r paste("mean:",med10_mu50)`
+`r paste("Var:",var10_mu50)`
+
+**Prueba de Normalidad**
+`r paste(sha10_mu50)`
+
+```{r}
+qqnorm(dat10_50)
+qqline(dat10_50)
+hist(dat10_50,main= 'Histograma de plantas muertas n=50',
+     ylab='Cantidad',xlap='proporcion',col='#024A86')
+```
+
+### Histograma n=60
+
+**Validez del Sesgo**
+`r paste("mean:",med10_mu60)`
+`r paste("Var:",var10_mu60)`
+
+**Prueba de Normalidad**
+`r paste(sha10_mu60)`
+
+```{r}
+qqnorm(dat10_60)
+qqline(dat10_60)
+hist(dat10_60,main= 'Histograma de plantas muertas n=60',
+     ylab='Cantidad',xlap='proporcion',col='#024A86')
+```
+
+### Histograma n=100
+
+**Validez del Sesgo**
+`r paste("mean:",med10_mu100)`
+`r paste("Var:",var10_mu100)`
+
+**Prueba de Normalidad**
+`r paste(sha10_mu100)`
+
+
+```{r}
+qqnorm(dat10_100)
+qqline(dat10_100)
+hist(dat10_100,main= 'Histograma de plantas muertas n=100',
+     ylab='Cantidad',xlap='proporcion',col='#024A86')
+```
+
+
+### Histograma N=200
+
+**Validez del Sesgo**
+`r paste("mean:",med10_mu200)`
+`r paste("Var:",var10_mu200)`
+
+**Prueba de Normalidad**
+`r paste(sha_mu200)`
+
+```{r}
+qqnorm(dat10_200)
+qqline(dat10_200)
+hist(dat10_200,main= 'Histograma de plantas muertas n=200',
+     ylab='Cantidad',xlap='proporcion',col='#024A86')
+```
+
+
+### Histograma n=500
+
+**Validez del Sesgo**
+`r paste("mean:",med10_mu500)`
+`r paste("Var:",var10_mu500)`
+
+**Prueba de Normalidad**
+`r paste(sha10_mu500)`
+
+```{r}
+qqnorm(dat10_500)
+qqline(dat10_500)
+hist(dat10_500,main= 'Histograma de plantas muertas n=500',
+     ylab='Cantidad',xlap='proporcion',col='#024A86')
+```
+
+
+
+
+#  <b style= 'color:#02ac66' >Plantas Enfermas  90%</b>
+
+
+```{r}
+#definicion
+poblacion_sana90=rep(0,each=100 )
+poblacion_enferma90=rep(1,each=900 )
+poblacion_input90= c(poblacion_sana90 ,poblacion_enferma90)
+
+med_pob90=mean(poblacion_input90)
+var_pob90=var(poblacion_input90)
+N90=length(poblacion_input90)
+#definicion muestra
+n_input=500
+n_input5=5
+n_input10=10
+n_input15=15
+n_input20=20
+n_input30=30
+n_input50=50
+n_input60=60
+n_input100=100
+n_input200=200
+#definicion ancho vectir
+ancho_input=500
+
+#funcion estimado
+func_proporcion = function(n,poblacion) {
+  muestra=sample(poblacion,n)
+  estimador=sum(muestra)/n
+  return (estimador)
+}
+#llenado de vector
+#vector500
+dat90_500=c()
+dat90_5=c()
+dat90_10=c()
+dat90_15=c()
+dat90_20=c()
+dat90_30=c()
+dat90_50=c()
+dat90_60=c()
+dat90_100=c()
+dat90_200=c()
+for (i in 1:ancho_input) {
+  dat90_500[i]=func_proporcion(n=n_input,poblacion=poblacion_input90)
+  dat90_5[i]=func_proporcion(n=n_input5,poblacion=poblacion_input90)
+  dat90_10[i]=func_proporcion(n=n_input10,poblacion=poblacion_input90)
+  dat90_15[i]=func_proporcion(n=n_input15,poblacion=poblacion_input90)
+  dat90_20[i]=func_proporcion(n=n_input20,poblacion=poblacion_input90)
+  dat90_30[i]=func_proporcion(n=n_input30,poblacion=poblacion_input90)
+  dat90_50[i]=func_proporcion(n=n_input50,poblacion=poblacion_input90)
+  dat90_60[i]=func_proporcion(n=n_input60,poblacion=poblacion_input90)
+  dat90_100[i]=func_proporcion(n=n_input100,poblacion=poblacion_input90)
+  dat90_200[i]=func_proporcion(n=n_input200,poblacion=poblacion_input90)
+}
+med90_mu500=mean(dat90_500)
+med90_mu5=mean(dat90_5)
+med90_mu10=mean(dat90_10)
+med90_mu15=mean(dat90_15)
+med90_mu20=mean(dat90_20)
+med90_mu30=mean(dat90_30)
+med90_mu50=mean(dat90_50)
+med90_mu60=mean(dat90_60)
+med90_mu100=mean(dat90_100)
+med90_mu200=mean(dat90_200)
+var90_mu500=var(dat90_500)
+var90_mu5=var(dat90_5)
+var90_mu10=var(dat90_10)
+var90_mu15=var(dat90_15)
+var90_mu20=var(dat90_20)
+var90_mu30=var(dat90_30)
+var90_mu50=var(dat90_50)
+var90_mu60=var(dat90_60)
+var90_mu100=var(dat90_100)
+var90_mu200=var(dat90_200)
+sha90_mu500=shapiro.test(dat90_500)
+sha90_mu5=shapiro.test(dat90_5)
+sha90_mu10=shapiro.test(dat90_10)
+sha90_mu15=shapiro.test(dat90_15)
+sha90_mu20=shapiro.test(dat90_20)
+sha90_mu30=shapiro.test(dat90_30)
+sha90_mu50=shapiro.test(dat90_50)
+sha90_mu60=shapiro.test(dat90_60)
+sha90_mu100=shapiro.test(dat90_100)
+sha90_mu200=shapiro.test(dat90_200)
+
+
+```
+
+Column {data-width=40 }
+--------------------------------------------
+
+### Poblacion {.value-box}
+
+```{r}
+valueBox(  N90,caption='Poblacion', icon="fa-solid fa-medal",col="#02ac66")
+```
+
+
+### Media Poblacional  {.value-box}
+```{r}
+valueBox(  med_pob90,caption='Media Poblacion', icon="fa-solid fa-medal",col="#02ac66")
+```
+
+
+
+Column {data-width=150}  {.tabset}
+-----------------------------------------------------------------------
+### Histograma n=5
+
+**Validez del Sesgo**
+`r paste("mean:",med90_mu5)`
+`r paste("Var:",var90_mu5)`
+
+**Prueba de Normalidad**
+`r paste(sha90_mu5)`
+
+
+```{r}
+qqnorm(dat90_5)
+qqline(dat90_5)
+hist(dat90_5,main= 'Histograma de plantas muertas n=5',
+     ylab='Cantidad',xlap='proporcion',col="#02ac66")
+```
+
+### Histograma n=10
+
+**Validez del Sesgo**
+`r paste("mean:",med90_mu10)`
+`r paste("Var:",var90_mu10)`
+
+**Prueba de Normalidad**
+`r paste(sha90_mu10)`
+
+
+
+```{r}
+qqnorm(dat90_10)
+qqline(dat90_10)
+hist(dat90_10,main= 'Histograma de plantas muertas n=10',
+     ylab='Cantidad',xlap='proporcion',col="#02ac66")
+```
+
+### Histograma n=15
+
+**Validez del Sesgo**
+`r paste("mean:",med90_mu15)`
+`r paste("Var:",var90_mu15)`
+
+**Prueba de Normalidad**
+`r paste(sha90_mu15)`
+
+```{r}
+qqnorm(dat90_15)
+qqline(dat90_15)
+hist(dat90_15,main= 'Histograma de plantas muertas n=15',
+     ylab='Cantidad',xlap='proporcion',col="#02ac66")
+```
+
+
+### Histograma n=20
+
+**Validez del Sesgo**
+`r paste("mean:",med90_mu20)`
+`r paste("Var:",var90_mu20)`
+
+**Prueba de Normalidad**
+`r paste(sha90_mu20)`
+
+
+```{r}
+qqnorm(dat90_20)
+qqline(dat90_20)
+hist(dat90_20,main= 'Histograma de plantas muertas n=20',
+     ylab='Cantidad',xlap='proporcion',col="#02ac66")
+```
+
+### Histograma n=30
+
+**Validez del Sesgo**
+`r paste("mean:",med90_mu30)`
+`r paste("Var:",var90_mu30)`
+
+**Prueba de Normalidad**
+`r paste(sha90_mu30)`
+
+
+
+```{r}
+qqnorm(dat90_30)
+qqline(dat90_30)
+hist(dat90_30,main= 'Histograma de plantas muertas n=30',
+     ylab='Cantidad',xlap='proporcion',col="#02ac66")
+```
+
+
+### Histograma n=50
+
+**Validez del Sesgo**
+`r paste("mean:",med90_mu50)`
+`r paste("Var:",var90_mu50)`
+
+**Prueba de Normalidad**
+`r paste(sha90_mu50)`
+
+```{r}
+qqnorm(dat90_50)
+qqline(dat90_50)
+hist(dat90_50,main= 'Histograma de plantas muertas n=50',
+     ylab='Cantidad',xlap='proporcion',col="#02ac66")
+```
+
+### Histograma n=60
+
+**Validez del Sesgo**
+`r paste("mean:",med90_mu60)`
+`r paste("Var:",var90_mu60)`
+
+**Prueba de Normalidad**
+`r paste(sha90_mu60)`
+
+```{r}
+qqnorm(dat90_60)
+qqline(dat90_60)
+hist(dat90_60,main= 'Histograma de plantas muertas n=60',
+     ylab='Cantidad',xlap='proporcion',col="#02ac66")
+```
+
+### Histograma n=100
+
+**Validez del Sesgo**
+`r paste("mean:",med90_mu100)`
+`r paste("Var:",var90_mu100)`
+
+**Prueba de Normalidad**
+`r paste(sha90_mu100)`
+
+
+```{r}
+qqnorm(dat90_100)
+qqline(dat90_100)
+hist(dat90_100,main= 'Histograma de plantas muertas n=100',
+     ylab='Cantidad',xlap='proporcion',col="#02ac66")
+```
+
+
+### Histograma N=200
+
+**Validez del Sesgo**
+`r paste("mean:",med90_mu200)`
+`r paste("Var:",var90_mu200)`
+
+**Prueba de Normalidad**
+`r paste(sha_mu200)`
+
+```{r}
+qqnorm(dat90_200)
+qqline(dat90_200)
+hist(dat90_200,main= 'Histograma de plantas muertas n=200',
+     ylab='Cantidad',xlap='proporcion',col="#02ac66")
+```la t
+
+
+### Histograma n=500
+
+**Validez del Sesgo**
+`r paste("mean:",med90_mu500)`
+`r paste("Var:",var90_mu500)`
+
+**Prueba de Normalidad**
+`r paste(sha90_mu500)`
+
+```{r}
+qqnorm(dat90_500)
+qqline(dat90_500)
+hist(dat90_500,main= 'Histograma de plantas muertas n=500',
+     ylab='Cantidad',xlap='proporcion',col="#02ac66")
+
+```
+

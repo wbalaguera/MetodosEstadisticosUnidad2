@@ -1,0 +1,125 @@
+---
+title: "Actividad 2 Metodos"
+subtile: "Actividad 2- WIlson Balguera Cubillos"
+output: 
+  flexdashboard::flex_dashboard:
+    theme:
+      version: 4
+      bg: "#ffffff"
+      fg: "#00557f" 
+      primary: "#f5f5f5"
+      navbar-bg: "#3ADAC6"
+      base_font: 
+        google: Prompt
+      heading_font:
+        google: Sen
+      code_font:
+        google: 
+          # arguments to sass::font_google() 
+          family: JetBrains Mono
+          local: false
+    orientation: columns
+    vertical_layout: fill
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+library(ggplot2)
+# Install thematic and un-comment for themed static plots (i.e., ggplot2)
+# thematic::thematic_rmd()
+```
+
+```{r}
+#definicion
+poblacion_input=rep(c(0,1),each=500 )
+med_pob=median(poblacion_input)
+var_pob=var(poblacion_input)
+N=length(poblacion_input)
+#definicion muestra
+n_input=500
+n_input5=5
+n_input10=10
+n_input15=15
+n_input20=20
+n_input30=30
+n_input50=50
+n_input60=60
+n_input100=100
+n_input100=200
+#definicion ancho vectir
+ancho_input=500
+
+#funcion estimado
+func_proporcion = function(n,poblacion) {
+  muestra=sample(poblacion,n)
+  estimador=sum(muestra)/n
+  return (estimador)
+}
+#llenado de vector
+mivector=c()
+for (i in 1:ancho_input) {
+  mivector[i]=func_proporcion(n=n_input,poblacion=poblacion_input)
+}
+
+dat=mivector
+
+med_mu500=median(dat)
+var_mu500=var(dat)
+
+```
+
+
+
+Column {data-width=40 }
+--------------------------------------------
+
+### Poblacion {.value-box}
+
+```{r}
+valueBox(  N,caption='Poblacion', icon="fa-solid fa-medal",col="#aa0000")
+```
+
+
+
+
+### Muestra  {.value-box}
+```{r}
+valueBox(  n_input,caption='Muestra', icon="fa-solid fa-medal",col="#aa0000")
+```
+
+
+
+Column {data-width=650 .tabset}
+-----------------------------------------------------------------------
+
+
+
+### Histograma
+
+```{r}
+med_pob
+hist(dat,main= 'Histograma de plantas muertas',
+     ylab='Cantidad',xlap='proporcion',col='red')
+```
+
+### Chart B
+
+```{r}
+
+```
+
+Column {data-width=350}
+-----------------------------------------------------------------------
+
+### Chart C
+
+```{r}
+
+```
+
+### Chart D
+
+```{r}
+
+```
+
